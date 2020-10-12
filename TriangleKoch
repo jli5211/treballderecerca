@@ -2,6 +2,27 @@ from math import sin, cos, pi
 import matplotlib.pyplot as plt
 import matplotlib
  
+def kochCurve(xi, yi, xf, yf, n):
+    if n==0:
+       plt.plot([xi,xf],[yi,yf])
+             
+    elif n>0:
+        x1 = xi + (xf - xi) / 3.0
+        y1 = yi + (yf - yi) / 3.0
+ 
+        x3 = xf - (xf - xi) / 3.0
+        y3 = yf - (yf - yi) / 3.0
+         
+        x2 = (x1 + x3) * cos (pi/3) - ( y3 - y1) * sin (pi/3)
+        y2 = (y1 + y3) * cos (pi/3) + ( x3 - x1) * sin (pi/3) 
+ 
+        kochCurve(xi,yi,x1,y1,n-1)
+        kochCurve(x1,y1,x2,y2,n-1)
+        kochCurve(x2,y2,x3,y3,n-1)
+        kochCurve(x3,y3,xf,yf,n-1)
+         
+    return
+
 def kochSnowFlake(l, n):
     x_vertex1 = 0
     y_vertex1 = 0
@@ -27,7 +48,7 @@ while True:
       continue
 
 plt.figure()
-plt.axis("off")
+#plt.axis("off")
 kochSnowFlake(1,iter)
 plt.title("Triangle de Koch")
-#plt.savefig("sfkoch.png",bbox_inches="tight")
+plt.savefig("sfkoch.png",bbox_inches="tight")
