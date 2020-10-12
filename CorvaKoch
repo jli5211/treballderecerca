@@ -1,0 +1,37 @@
+from math import sin, cos, pi
+import matplotlib.pyplot as plt
+import matplotlib
+
+def kochCurve(xi, yi, xf, yf, n):
+    if n==0:
+       plt.plot([xi,xf],[yi,yf])
+             
+    elif n>0:
+        x1 = xi + (xf - xi) / 3.0
+        y1 = yi + (yf - yi) / 3.0
+ 
+        x3 = xf - (xf - xi) / 3.0
+        y3 = yf - (yf - yi) / 3.0
+         
+        x2 = (x1 + x3) * cos (pi/3) - ( y3 - y1) * sin (pi/3)
+        y2 = (y1 + y3) * cos (pi/3) + ( x3 - x1) * sin (pi/3) 
+ 
+        kochCurve(xi,yi,x1,y1,n-1)
+        kochCurve(x1,y1,x2,y2,n-1)
+        kochCurve(x2,y2,x3,y3,n-1)
+        kochCurve(x3,y3,xf,yf,n-1)
+         
+    return
+  
+while True:
+  try:
+    iter = int(input("Introduce el número de iteraciones: "))
+    break
+  except ValueError:
+      print("Sòlo números enteros...") 
+      continue
+plt.figure()
+plt.axis("off")
+kochCurve(1,2,10,2,iter)
+plt.title("Corva de Koch")
+#plt.savefig("ckoch.png",bbox_inches="tight")
